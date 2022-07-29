@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TerminalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SearchController::class, 'home'])->name('home');
 Route::post('/search', [SearchController::class, 'search'])->name('search');
+
+Route::resource('countries', CountryController::class);
+Route::resource('countries.terminals', TerminalController::class)->shallow();
 
 Route::get('/dashboard', function () {
     return view('dashboard');

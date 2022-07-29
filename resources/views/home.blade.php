@@ -20,40 +20,50 @@
                         </div>
                     </div>
 
-                    <div class="bg-blue-200 p-6 mt-3">
-                        <h1>Leaving From</h1>
-                        <div>
-
-                            <x-label>Select A Country / Region</x-label>
-                            <x-select class="block w-full">
-
-                            </x-select>
+                    <div class="bg-blue-200 p-6 mt-3 flex space-x-5">
+                        <div class="w-full">
+                            <h1>Leaving From</h1>
+                            <div>
+                                <x-label>Select A Country / Region</x-label>
+                                <x-select class="block w-full" x-model.number="countryOrigin" x-on:change="getTerminalsOrigin()">
+                                    <template x-for="(country, countryIndex) in countries" :key="`C`+countryIndex">
+                                        <option :value="country.id" x-text="country.name"></option>
+                                    </template>
+                                </x-select>
+                            </div>
+                            <div>
+                                <x-label>Select A City</x-label>
+                                <x-select class="block w-full" x-model.number="terminalOrigin" >
+                                    <template x-for="(t, terminalIndex) in terminalsOrigin" :key="`TO`+terminalIndex">
+                                        <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
+                                    </template>
+                                </x-select>
+                            </div>
                         </div>
-                        <div>
-
-                            <x-label>Select A City</x-label>
-                            <x-select class="block w-full">
-
-                            </x-select>
+                        <div class="w-full">
+                            <h1>Going To</h1>
+                            <div>
+                                <x-label>Select A Country / Region</x-label>
+                                <x-select class="block w-full" x-model.number="countryDest" x-on:change="getTerminalsDest()">
+                                    <option value="0">...</option>
+                                    <template x-for="(country, countryIndex) in countries" :key="`C`+countryIndex">
+                                        <option :value="country.id" x-text="country.name"></option>
+                                    </template>
+                                </x-select>
+                            </div>
+                            <div>
+                                <x-label>Select A City</x-label>
+                                <x-select class="block w-full" x-model.number="terminalDest" >
+                                    <option value="0">...</option>
+                                    <template x-for="(t, terminalIndex) in terminalsDest" :key="`TD`+terminalIndex">
+                                        <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
+                                    </template>
+                                </x-select>
+                            </div>
                         </div>
                     </div>
+
                     <div class="p-6">
-                        <h1>Going To</h1>
-                        <div>
-                            <x-label>Select A Country / Region</x-label>
-                            <x-select class="block w-full">
-
-                            </x-select>
-                        </div>
-                        <div>
-                            <x-label>Select A City</x-label>
-                            <x-select class="block w-full">
-
-                            </x-select>
-                        </div>
-                    </div>
-
-                    <div class="bg-blue-200 p-6">
                         <h1>Travel Dates</h1>
                         <div>
                             <x-label>Travel</x-label>
@@ -66,7 +76,7 @@
                             </div>
                         </template>
                     </div>
-                    <div class="p-6">
+                    <div class="bg-blue-200 p-6">
                         <div x-data="{ open : false }">
                             <h1>Passenger Type</h1>
                             <div class="flex justify-between p-2 border" x-on:click="open = !open">
@@ -96,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-blue-200 p-6">
+                    <div class="p-6">
                         <x-label>Cabin Class</x-label>
                         <x-select class="block w-full" name="cabin">
                             <option value="economy">ECONOMY</option>
@@ -115,6 +125,13 @@
     <script>
         function booking(){
             return {
+                countryOrigin: 1,
+                terminalOrigin: 1,
+                countryDest: 0,
+                terminalDest: 0,
+                countries: [],
+                terminalsOrigin: [],
+                terminalsDest: [],
                 sum: 1,
                 trip: 'returning',
                 passengers: [
@@ -128,7 +145,23 @@
                 init() {
                     this.$nextTick(() => {
                         this.passengers[0].count = 1
+                        this.countries = @json($countries);
+                        terminals = this.countries.filter((c) => c.id == 1)[0].terminals
+                        this.terminalsOrigin = Alpine.raw(terminals)
                     })
+                },
+                getTerminalsOrigin(){
+                    console.log(this.countryOrigin)
+
+                    terminals = this.countries.filter((c) => c.id == this.countryOrigin)[0].terminals
+                    this.terminalsOrigin = Alpine.raw(terminals)
+
+                },
+                getTerminalsDest(){
+                    console.log(this.countryDest)
+
+                    terminals = this.countries.filter((c) => c.id == this.countryDest)[0].terminals
+                    this.terminalsDest = Alpine.raw(terminals)
                 },
                 getTotalPassengers(index) {
                     const total = 10
