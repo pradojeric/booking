@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Flight;
+use App\Models\Country;
+use App\Models\Airplane;
 use Illuminate\Http\Request;
 
 class FlightController extends Controller
@@ -14,7 +16,9 @@ class FlightController extends Controller
      */
     public function index()
     {
-        //
+        return view('flights.index', [
+            'flights' => Flight::all(),
+        ]);
     }
 
     /**
@@ -24,7 +28,10 @@ class FlightController extends Controller
      */
     public function create()
     {
-        //
+        return view('flights.create', [
+            'airplanes' => Airplane::all(),
+            'countries' => Country::with(['terminals'])->orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -35,7 +42,18 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        Flight::create([
+            'terminal_orig_id' => $request->terminal_orig_id,
+            'terminal_dest_id' => $request->terminal_dest_id,
+            'airplane_id' => $request->airplane_id,
+            'price' => $request->price,
+            'departure_time' => $request->departure_time,
+            'arrival_time' => $request->arrival_time,
+        ]);
+
+        return redirect()->route('flights.index');
     }
 
     /**

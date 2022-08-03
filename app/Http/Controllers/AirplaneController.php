@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class AirplaneController extends Controller
 {
+    private $cabins = [
+        'economy',
+        'premium economy',
+        'business'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,9 @@ class AirplaneController extends Controller
      */
     public function index()
     {
-        //
+        return view('airplane.index', [
+            'airplanes' => Airplane::all(),
+        ]);
     }
 
     /**
@@ -24,7 +32,9 @@ class AirplaneController extends Controller
      */
     public function create()
     {
-        //
+        return view('airplane.create', [
+            'cabins' => $this->cabins,
+        ]);
     }
 
     /**
@@ -35,7 +45,13 @@ class AirplaneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Airplane::create([
+            'name' => $request->name,
+            'seats' => $request->seats,
+            'cabin' => $request->cabin,
+        ]);
+
+        return redirect()->route('airplanes.index');
     }
 
     /**
