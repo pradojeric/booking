@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Flight;
 use App\Models\Country;
 use App\Models\Airplane;
@@ -17,7 +18,7 @@ class FlightController extends Controller
     public function index()
     {
         return view('flights.index', [
-            'flights' => Flight::all(),
+            'flights' => Flight::orderBy('departure_time')->get(),
         ]);
     }
 
@@ -42,16 +43,24 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
+        $depart = Carbon::parse($request->departure_time);
+        $arrive = Carbon::parse($request->arrival_time);
 
+        for($i = 0; $i < 7; $i++)
+        {
+            Flight::create([
+                'terminal_orig_id' => $request->terminal_orig_id,
+                'terminal_dest_id' => $request->terminal_dest_id,
+                'airplane_id' => $request->airplane_id,
+                'price' => $request->price,
+                'departure_time' => $depart,
+                'arrival_time' => $arrive,
+            ]);
 
-        Flight::create([
-            'terminal_orig_id' => $request->terminal_orig_id,
-            'terminal_dest_id' => $request->terminal_dest_id,
-            'airplane_id' => $request->airplane_id,
-            'price' => $request->price,
-            'departure_time' => $request->departure_time,
-            'arrival_time' => $request->arrival_time,
-        ]);
+            $depart = (clone $depart)->addWeek();
+            $arrive = (clone $arrive)->addWeek();
+
+        }
 
         return redirect()->route('flights.index');
     }

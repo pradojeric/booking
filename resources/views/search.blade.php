@@ -6,31 +6,44 @@
                     SELECT - FLIGHTS
                 </div>
             </div>
-            <div class="flex space-x-4">
+            <div class="flex flex-row-reverse space-x-4">
+                <div class="w-1/4 mt-3">
+                    <div class="bg-blue-700 p-3 text-white border border-white">
+                        Your Booking
+                    </div>
+                    <div class="bg-blue-700 p-3 text-white border border-white">
+                        <h1 class="text-sm">{{ count($passengers) }} Traveler</h1>
+                        <ul>
+                            @foreach ($passengers as $i => $passenger)
+                                <li class="text-xs">{{ $passenger }} <span class="capitalize">{{ preg_replace("/[^A-Za-z0-9 ]/", '', $i); }}</span></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
                 <div class="grow mt-3">
                     <h1>Please select departure flight</h1>
                     <div class="flex space-x-5">
                         <div>
-                            <h1 class="font-bold text-lg tracking-wide">
-                                MANILA
+                            <h1 class="font-bold text-lg tracking-wide uppercase">
+                                {{ $orig->city }}
                             </h1>
                             <p class="text-sm -mt-2">
-                                Ninoy Aquino International (MNL)
+                                {{ $orig->name }} ({{ $orig->code }})
                             </p>
                         </div>
                         <div>
                             ->
                         </div>
                         <div>
-                            <h1 class="font-bold text-lg tracking-wide">
-                                CEBU
+                            <h1 class="font-bold text-lg tracking-wide uppercase">
+                                {{ $dest->city }}
                             </h1>
                             <p class="text-sm -mt-2">
-                                Mactan International (CEB)
+                                {{ $dest->name }} ({{ $dest->code }})
                             </p>
                         </div>
                         <div>
-                            {{ now()->format('D d M') }}
+                            {{ $travel->format('D d M') }}
                         </div>
                     </div>
 
@@ -103,17 +116,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="w-1/4 mt-3">
-                    <div class="bg-blue-700 p-3 text-white border border-white">
-                        Your Booking
-                    </div>
-                    <div class="bg-blue-700 p-3 text-white border border-white">
-                        <h1 class="text-sm">1 Traveler</h1>
-                        <ul>
-                            <li class="text-xs">1 Adult</li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
 
         </div>

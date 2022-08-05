@@ -11,12 +11,12 @@
                 <div class="px-6 mt-3" x-data="booking()">
                     <div class="flex space-x-4">
                         <div class="flex items-center space-x-2">
-                            <input type="radio" value="returning" x-model="trip" id="returning">
-                            <x-label for="returning" value="Returning" />
-                        </div>
-                        <div class="flex items-center space-x-2">
                             <input type="radio" value="one_way" x-model="trip" id="one_way">
                             <x-label for="one_way" value="One Way" />
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="radio" value="returning" x-model="trip" id="returning">
+                            <x-label for="returning" value="Returning" />
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@
                             </div>
                             <div>
                                 <x-label>Select A City</x-label>
-                                <x-select class="block w-full" x-model.number="terminalOrigin" >
+                                <x-select class="block w-full" x-model.number="terminalOrigin" name="terminalOrigin" >
                                     <template x-for="(t, terminalIndex) in terminalsOrigin" :key="`TO`+terminalIndex">
                                         <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
                                     </template>
@@ -53,7 +53,7 @@
                             </div>
                             <div>
                                 <x-label>Select A City</x-label>
-                                <x-select class="block w-full" x-model.number="terminalDest" >
+                                <x-select class="block w-full" x-model.number="terminalDest" name="terminalDest" >
                                     <option value="0">...</option>
                                     <template x-for="(t, terminalIndex) in terminalsDest" :key="`TD`+terminalIndex">
                                         <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
@@ -133,7 +133,7 @@
                 terminalsOrigin: [],
                 terminalsDest: [],
                 sum: 1,
-                trip: 'returning',
+                trip: "one_way",
                 passengers: [
                     {'name' : 'adult', 'label' : 'Adult (12y +)', 'count' : 0, totalPassengers: 10},
                     {'name' : 'children', 'label' : 'Children (2y - 11)', 'count' : 0, totalPassengers: 10},
