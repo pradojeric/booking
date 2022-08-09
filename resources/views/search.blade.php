@@ -55,64 +55,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t hover:border-2 hover:shadow-md bg-white">
-                                <td class="px-3 py-2">
-                                    <div>
-                                        <span class="font-bold text-lg">04:10</span> Ninoy Aquino International (MNL)
-                                    </div>
-                                    <div>
-                                        | Direct
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-lg">05:35</span> Mactan International (CEB)
-                                    </div>
-                                    <div>
-                                        Duration <span class="font-bold text-lg">01h25m</span>
-                                    </div>
-                                    <div>
-                                        Airlines (PR4356)
-                                    </div>
-                                </td>
-                                <td class="px-3 py-2 text-center">
-                                    <x-button>
+                            @foreach ($flights as $flight)
+                                <tr class="border-t hover:border-2 hover:shadow-md bg-white">
+                                    <td class="px-3 py-2">
                                         <div>
-                                            PHP
+                                            <span class="font-bold text-lg">{{ $flight->departure_time->format('H:i') }}</span> {{ $flight->terminalOrig->name }} ({{ $flight->terminalOrig->code }})
                                         </div>
                                         <div>
-                                            4,500.00
-                                        </div>
-                                    </x-button>
-                                </td>
-                            </tr>
-                            <tr class="border-t hover:border-2 hover:shadow-md bg-white">
-                                <td class="px-3 py-2">
-                                    <div>
-                                        <span class="font-bold text-lg">04:10</span> Ninoy Aquino International (MNL)
-                                    </div>
-                                    <div>
-                                        | Direct
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-lg">05:35</span> Mactan International (CEB)
-                                    </div>
-                                    <div>
-                                        Duration <span class="font-bold text-lg">01h25m</span>
-                                    </div>
-                                    <div>
-                                        Airlines (PR4356)
-                                    </div>
-                                </td>
-                                <td class="px-3 py-2 text-center">
-                                    <x-button>
-                                        <div>
-                                            PHP
+                                            | Direct
                                         </div>
                                         <div>
-                                            4,500.00
+                                            <span class="font-bold text-lg">{{ $flight->arrival_time->format('H:i') }}</span> {{ $flight->terminalDest->name }} ({{ $flight->terminalDest->code }})
                                         </div>
-                                    </x-button>
-                                </td>
-                            </tr>
+                                        <div>
+                                            Duration <span class="font-bold text-lg">{{ $flight->arrival_time->diff($flight->departure_time)->format('%Hhr%imin') }}</span>
+                                        </div>
+                                        <div>
+                                            ({{ $flight->airplane->name }})
+                                        </div>
+                                    </td>
+                                    <td class="px-3 py-2 text-center">
+                                        <form action="{{ route('personal.info') }}" method="post">
+                                            @csrf
+                                            <x-button>
+                                                <div>
+                                                    PHP
+                                                </div>
+                                                <div>
+                                                    {{ $flight->price }}
+                                                </div>
+                                            </x-button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

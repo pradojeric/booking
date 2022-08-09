@@ -20,6 +20,7 @@ use App\Http\Controllers\TerminalController;
 
 Route::get('/', [SearchController::class, 'home'])->name('home');
 Route::post('/search', [SearchController::class, 'search'])->name('search');
+Route::post('/search/personal-info', [SearchController::class, 'personalInfo'])->name('personal.info');
 
 Route::resource('countries', CountryController::class);
 Route::resource('countries.terminals', TerminalController::class)->shallow();
