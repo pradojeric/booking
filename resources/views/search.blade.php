@@ -12,7 +12,7 @@
                         Your Booking
                     </div>
                     <div class="bg-blue-700 p-3 text-white border border-white">
-                        <h1 class="text-sm">{{ count($passengers) }} Traveler</h1>
+                        <h1 class="text-sm">{{ array_sum($passengers) }} Traveler</h1>
                         <ul>
                             @foreach ($passengers as $i => $passenger)
                                 <li class="text-xs">{{ $passenger }} <span class="capitalize">{{ preg_replace("/[^A-Za-z0-9 ]/", '', $i); }}</span></li>
@@ -77,7 +77,8 @@
                                     <td class="px-3 py-2 text-center">
                                         <form action="{{ route('personal.info') }}" method="post">
                                             @csrf
-                                            <x-button>
+                                            <input type="hidden" name="travel_flight" value="{{ $flight->id }}">
+                                            <x-button class=" h-32">
                                                 <div>
                                                     PHP
                                                 </div>

@@ -30,4 +30,21 @@ class Flight extends Model
     {
         return $this->belongsTo(Terminal::class, 'terminal_dest_id');
     }
+
+    public function travelBookings()
+    {
+        return $this->hasMany(Booking::class, 'travel_flight_id');
+    }
+
+    public function backBookings()
+    {
+        return $this->hasMany(Booking::class, 'back_flight_id');
+    }
+
+    public function computeRemainingSeats()
+    {
+        $seats = $this->travelBookings->sum('passengers') + $this->backBookings->sum('passengers');
+
+        return $this->airplane->seats - $seats;
+    }
 }

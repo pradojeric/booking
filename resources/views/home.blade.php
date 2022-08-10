@@ -1,6 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <x-auth-validation-errors></x-auth-validation-errors>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     BOOK A FLIGHT
@@ -33,7 +34,7 @@
                             </div>
                             <div>
                                 <x-label>Select A City</x-label>
-                                <x-select class="block w-full" x-model.number="terminalOrigin" name="terminalOrigin" >
+                                <x-select class="block w-full" x-model.number="terminalOrigin" name="terminalOrigin"  required>
                                     <template x-for="(t, terminalIndex) in terminalsOrigin" :key="`TO`+terminalIndex">
                                         <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
                                     </template>
@@ -45,7 +46,7 @@
                             <div>
                                 <x-label>Select A Country / Region</x-label>
                                 <x-select class="block w-full" x-model.number="countryDest" x-on:change="getTerminalsDest()">
-                                    <option value="0">...</option>
+                                    <option value="">...</option>
                                     <template x-for="(country, countryIndex) in countries" :key="`C`+countryIndex">
                                         <option :value="country.id" x-text="country.name"></option>
                                     </template>
@@ -53,8 +54,8 @@
                             </div>
                             <div>
                                 <x-label>Select A City</x-label>
-                                <x-select class="block w-full" x-model.number="terminalDest" name="terminalDest" >
-                                    <option value="0">...</option>
+                                <x-select class="block w-full" x-model.number="terminalDest" name="terminalDest" required>
+                                    <option value="">...</option>
                                     <template x-for="(t, terminalIndex) in terminalsDest" :key="`TD`+terminalIndex">
                                         <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
                                     </template>
@@ -67,7 +68,7 @@
                         <h1>Travel Dates</h1>
                         <div>
                             <x-label>Travel</x-label>
-                            <x-input type="date" class="block w-full" name="travel"></x-input>
+                            <x-input type="date" class="block w-full" name="travel" required></x-input>
                         </div>
                         <template x-if="trip == 'returning'">
                             <div>
@@ -96,7 +97,7 @@
                                 <template x-for="(passenger, index) in passengers" :key="`passenger` + index">
                                     <div class="flex justify-between items-center w-full py-1">
                                         <span class="text-sm" x-text="passenger.label"></span>
-                                        <x-select class="text-sm" x-model.number="passenger.count" x-on:change="getTotalPassengers(index)" x-bind:name="`passengers['`+ passenger.name +`']`">
+                                        <x-select class="text-sm" x-model.number="passenger.count" x-on:change="getTotalPassengers(index)" x-bind:name="`passengers[`+ passenger.name +`]`">
                                             <template x-for="(i, pIndex) in passenger.totalPassengers" :key="`total` + i">
                                                 <option x-value="pIndex" x-text="pIndex"></option>
                                             </template>
@@ -108,7 +109,7 @@
                     </div>
                     <div class="p-6">
                         <x-label>Cabin Class</x-label>
-                        <x-select class="block w-full" name="cabin">
+                        <x-select class="block w-full" name="cabin" required>
                             <option value="economy">ECONOMY</option>
                             <option value="premium economy">PREMIUM ECONOMY</option>
                             <option value="business">BUSINESS</option>
@@ -127,8 +128,8 @@
             return {
                 countryOrigin: 1,
                 terminalOrigin: 1,
-                countryDest: 0,
-                terminalDest: 0,
+                countryDest: null,
+                terminalDest: null,
                 countries: [],
                 terminalsOrigin: [],
                 terminalsDest: [],
