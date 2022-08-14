@@ -18,12 +18,15 @@
             <form action="{{ route('countries.terminals.store', $country) }}" method="post">
                 @csrf
                 <div class="mt-2">
+                    <x-label>City</x-label>
                     <x-input name="city" class="block w-full"></x-input>
                 </div>
                 <div class="mt-2">
+                    <x-label>Name</x-label>
                     <x-input name="name" class="block w-full"></x-input>
                 </div>
                 <div class="mt-2">
+                    <x-label>Code</x-label>
                     <x-input name="code" class="block w-full"></x-input>
                 </div>
                 <div class="mt-2">

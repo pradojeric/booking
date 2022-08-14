@@ -7,6 +7,8 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\AirplaneController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TerminalController;
+use App\Mail\ContactMe;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,13 @@ Route::resource('airplanes', AirplaneController::class);
 Route::resource('flights', FlightController::class);
 
 Route::resource('bookings', BookingController::class);
+
+Route::get('/email', function() {
+    Mail::to('only4ryona@gmail.com')
+        ->send(new ContactMe());
+
+    return "email sent";
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

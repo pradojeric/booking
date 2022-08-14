@@ -18,6 +18,7 @@
             <form action="{{ route('countries.store') }}" method="post">
                 @csrf
                 <div>
+                    <x-label>Name</x-label>
                     <x-input name="name"></x-input>
                 </div>
                 <div>
