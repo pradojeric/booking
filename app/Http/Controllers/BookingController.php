@@ -48,7 +48,7 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return vieW('bookings.show', compact('booking'));
     }
 
     /**

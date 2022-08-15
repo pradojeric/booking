@@ -78,13 +78,23 @@
                                         <form action="{{ route('personal.info') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="travel_flight" value="{{ $flight->id }}">
-                                            <x-button class=" h-32">
-                                                <div>
-                                                    PHP
-                                                </div>
-                                                <div>
-                                                    {{ $flight->price }}
-                                                </div>
+                                            <x-button class="h-32" :disabled="$flight->computeRemainingSeats() < 1">
+                                                @if($flight->computeRemainingSeats() < 1)
+                                                    Not Available
+                                                @else
+                                                    <div>
+                                                        PHP
+                                                    </div>
+                                                    <div>
+                                                        {{ $flight->price }}
+                                                    </div>
+                                                    @if($flight->computeRemainingSeats() < 5)
+                                                        <div>
+                                                            Seats Remaining: {{ $flight->computeRemainingSeats() }}
+                                                        </div>
+                                                    @endif
+                                                @endif
+
                                             </x-button>
                                         </form>
                                     </td>

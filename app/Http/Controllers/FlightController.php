@@ -15,10 +15,12 @@ class FlightController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('flights.index', [
-            'flights' => Flight::orderBy('departure_time')->get(),
+            'flights' => Flight::when($request->get('date'), function($query) use ($request) {
+                $query->whereDate('departure_time', $request->get('date'));
+            })->orderBy('departure_time')->paginate(25),
         ]);
     }
 

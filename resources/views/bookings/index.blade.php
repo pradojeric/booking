@@ -10,7 +10,8 @@
             <table class="w-full">
                 <thead>
                     <tr>
-                        <th>NAME</th>
+                        <th>Flight ID</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Passengers</th>
                         <th>Action</th>
@@ -19,11 +20,12 @@
                 <tbody>
                     @foreach ($bookings as $booking)
                         <tr>
+                            <td class="text-center">{{ $booking->travel_flight_id }}</td>
                             <td class="text-center">{{ $booking->bookingInformations->first()->last_name }}</td>
                             <td class="text-center">{{ $booking->email }}</td>
                             <td class="text-center">{{ $booking->passengers }}</td>
                             <td class="text-center">
-                                <a href="">
+                                <a href="{{ route('bookings.show', $booking) }}">
                                     <x-button>View</x-button>
                                 </a>
                             </td>

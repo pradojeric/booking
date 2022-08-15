@@ -12,8 +12,15 @@
 
             </div>
             @auth
+                <div class="flex items-center space-x-4">
+                    <x-nav-link :href="route('airplanes.index')" :active="request()->routeIs('airplanes.*')">Airplanes</x-nav-link>
+                    <x-nav-link :href="route('countries.index')" :active="request()->routeIs('countries.*')">Countries</x-nav-link>
+                    <x-nav-link :href="route('flights.index')" :active="request()->routeIs('flights.*')">Flights</x-nav-link>
+                    <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.*')">Bookings</x-nav-link>
+                </div>
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
+
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">

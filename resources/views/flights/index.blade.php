@@ -7,12 +7,18 @@
                 </div>
             </div>
 
-            <div class="my-3">
+            <div class="my-3 flex justify-between">
                 <a href="{{ route('flights.create') }}">
                     <x-button type="button">
                         Create
                     </x-button>
                 </a>
+                <div>
+                    <form action="{{ URL::current() }}">
+                        <x-input type="date" name="date" :value="request()->get('date')"></x-input>
+                        <x-button>Search</x-button>
+                    </form>
+                </div>
             </div>
 
             <table class="w-full">
@@ -50,6 +56,8 @@
 
                 </tbody>
             </table>
+
+            {{ $flights->links() }}
         </div>
     </div>
 </x-app-layout>
