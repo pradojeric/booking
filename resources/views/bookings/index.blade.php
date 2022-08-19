@@ -1,32 +1,26 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    BOOKINGS
-                </div>
-            </div>
-
-            <table class="w-full">
-                <thead>
+    <div class="xl:px-60">
+        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th>Flight ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Passengers</th>
-                        <th>Action</th>
+                        <th scope="col" class="py-3 px-6">Flight ID</th>
+                        <th scope="col" class="py-3 px-6">Name</th>
+                        <th scope="col" class="py-3 px-6">Email</th>
+                        <th scope="col" class="py-3 px-6">Passengers</th>
+                        <th scope="col" class="py-3 px-6">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($bookings as $booking)
-                        <tr>
-                            <td class="text-center">{{ $booking->travel_flight_id }}</td>
-                            <td class="text-center">{{ $booking->bookingInformations->first()->last_name }}</td>
-                            <td class="text-center">{{ $booking->email }}</td>
-                            <td class="text-center">{{ $booking->passengers }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('bookings.show', $booking) }}">
-                                    <x-button>View</x-button>
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="py-4 px-6">{{ $booking->travel_flight_id }}</td>
+                            <td class="py-4 px-6">{{ $booking->bookingInformations->first()->last_name }}</td>
+                            <td class="py-4 px-6">{{ $booking->email }}</td>
+                            <td class="py-4 px-6">{{ $booking->passengers }}</td>
+                            <td class="py-4 px-6">
+                                <a href="{{ route('bookings.show', $booking) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                    View
                                 </a>
                             </td>
                         </tr>

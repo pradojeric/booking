@@ -1,23 +1,17 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    BOOKINGS
-                </div>
-            </div>
-
+    <div class="xl:px-60">
+        <div class="p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div>
-                Date: {{ $booking->travelFlight->departure_time }}
+                <span class="font-bold">Date:</span> {{ $booking->travelFlight->departure_time }}
             </div>
             <div>
-                Information: {{ $booking->bookingInformations()->first()->full_name }}
+                <span class="font-bold">Information:</span> {{ $booking->bookingInformations()->first()->full_name }}
             </div>
             <div>
-                Email: {{ $booking->email }}
+                <span class="font-bold">Email:</span> {{ $booking->email }}
             </div>
             <div>
-                Passengers: {{ $booking->passengers }}
+                <span class="font-bold">Passengers:</span> {{ $booking->passengers }}
                 <ul>
                     @foreach ($booking->bookingInformations as $passenger)
                         <li>{{ $passenger->full_name }} ({{ $passenger->passenger_type }})</li>
@@ -25,21 +19,14 @@
                 </ul>
             </div>
 
-            <div>
-                Flight Information:
+            <div class="mt-6">
+                <h1 class="font-bold text-lg tracking-wide uppercase my-2">Flight Information:</h1>
                 <div>
                     <span class="font-bold text-lg">{{ $booking->travelFlight->departure_time->format('H:i') }}</span> {{ $booking->travelFlight->terminalOrig->name }} ({{ $booking->travelFlight->terminalOrig->code }})
-                </div>
-                <div>
-                    | Direct
-                </div>
-                <div>
+                    <br>Direct<br>
                     <span class="font-bold text-lg">{{ $booking->travelFlight->arrival_time->format('H:i') }}</span> {{ $booking->travelFlight->terminalDest->name }} ({{ $booking->travelFlight->terminalDest->code }})
-                </div>
-                <div>
-                    Duration <span class="font-bold text-lg">{{ $booking->travelFlight->arrival_time->diff($booking->travelFlight->departure_time)->format('%Hhr%imin') }}</span>
-                </div>
-                <div>
+                    <br>Duration<br>
+                    <span class="font-bold text-lg">{{ $booking->travelFlight->arrival_time->diff($booking->travelFlight->departure_time)->format('%Hhr%imin') }}</span>
                     ({{ $booking->travelFlight->airplane->name }})
                 </div>
             </div>

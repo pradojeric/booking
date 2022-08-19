@@ -123,7 +123,7 @@ class SearchController extends Controller
             ->send(new BookingSuccessful($booking));
 
         DB::commit();
-        return view('booking_success', [
+        return view('booking-success', [
             'email' => $request->email,
         ]);
     }
