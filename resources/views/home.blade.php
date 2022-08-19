@@ -40,6 +40,7 @@
                                 <div class="my-1">
                                     <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Select A Country / Region</label>
                                     <select x-model.number="countryDest" x-on:change="getTerminalsDest()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">...</option>
                                         <template x-for="(country, countryIndex) in countries" :key="`C`+countryIndex">
                                             <option :value="country.id" x-text="country.name"></option>
                                         </template>
@@ -48,6 +49,7 @@
                                 <div class="my-1">
                                     <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Select A City</label>
                                     <select x-model.number="terminalDest" name="terminalDest" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                        <option value="">...</option>
                                         <template x-for="(t, terminalIndex) in terminalsDest" :key="`TD`+terminalIndex">
                                             <option :value="t.id" x-text="t.city + ` (`+ t.code +`)`"></option>
                                         </template>
@@ -109,7 +111,7 @@
         function booking(){
             return {
                 countryOrigin: 1,
-                terminalOrigin: 1,
+                terminalOrigin: null,
                 countryDest: null,
                 terminalDest: null,
                 countries: [],
@@ -129,7 +131,7 @@
                     this.$nextTick(() => {
                         this.passengers[0].count = 1
                         this.countries = @json($countries);
-                        terminals = this.countries.filter((c) => c.id == 1)[0].terminals
+                        terminals = this.countries.filter((c) => c.id == this.countryOrigin)[0].terminals
                         this.terminalsOrigin = Alpine.raw(terminals)
                     })
                 },
