@@ -5,7 +5,7 @@
                 Back
             </a>
         </div>
-        <div class="p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700" x-data="flights">
             <form action="{{ route('flights.store') }}" method="post">
                 @csrf
                 <div class="grid md:grid-cols-2 md:gap-6">
@@ -38,6 +38,7 @@
                         <div>
                             <label class="text-sm font-medium text-gray-900 dark:text-gray-300">Select A Country / Region</label>
                             <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" x-model.number="countryDest" x-on:change="getTerminalsDest()">
+                                <option value="" selected hidden>...</option>
                                 <template x-for="(country, countryIndex) in countries" :key="`C`+countryIndex">
                                     <option :value="country.id" x-text="country.name"></option>
                                 </template>
@@ -82,7 +83,7 @@
     <script>
         function flights() {
             return {
-                countryOrigin: 0,
+                countryOrigin: 1,
                 terminalOrigin: 0,
                 countryDest: 0,
                 terminalDest: 0,
@@ -92,6 +93,8 @@
                 init() {
                     this.$nextTick(() => {
                         this.countries = @json($countries);
+                        terminals = this.countries.filter((c) => c.id == this.countryOrigin)[0].terminals
+                        this.terminalsOrigin = Alpine.raw(terminals)
                     })
                 },
                 getTerminalsOrigin(){
